@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+</head>
+
+<body class="font-mono  bg-slate-300">
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <!-- Mobile menu button-->
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+
+                        <svg class=" toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+
+                    </button>
+                </div>
+                <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                        <img class="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
+                    </div>
+                    <div class="hidden sm:block sm:ml-6">
+                        <div class="flex space-x-4">
+
+                            <a href="#" class="hover:bg-gray-700 hover:text-white text-gray-300 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+
+                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Team</a>
+
+                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+
+                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="target-modal" class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <button type="button" class="btn show-modal bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">View cart</span>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+
+                    </button> <span class="counter-cart absolute bottom-9 right-10   text-center text-lg text-violet-400 "></span>
+                    <!-- Profile dropdown -->
+                    <div id="img-profile" class="ml-3 relative">
+                        <div>
+                            <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full"
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt="">
+                            </button>
+                        </div>
+                        <div id="profile-popup" class="  hidden ">
+                            <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" " >
+                            <a href=" # " class=" block px-4 py-2 text-sm text-gray-700 " role=" menuitem " tabindex=" -1 "
+                                id=" user-menu-item-0 ">Your Profile</a>
+                                <a href=" # " class=" block px-4 py-2 text-sm text-gray-700 " role=" menuitem " tabindex=" -1 "
+                                    id=" user-menu-item-1 ">Settings</a>
+                                <a href=" # " class=" block px-4 py-2 text-sm text-gray-700 " role=" menuitem " tabindex=" -1 "
+                                    id=" user-menu-item-2 ">Sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" mobile-menu hidden lg:hidden " >
+            <div class=" px-2 pt-2 pb-3 space-y-1 ">
+               
+                <a href=" # " class=" bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium "
+                    aria-current=" page ">Dashboard</a>
+
+                <a href=" # "
+                    class=" text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium ">Team</a>
+
+                <a href=" # "
+                    class=" text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium ">Projects</a>
+
+                <a href=" # "
+                    class=" text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium ">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+    <div >
+        <div class=" downer max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 ">
+            <h2 class=" sr-only ">Products</h2>
+
+            <div class=" product-center grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ">
+                       <!-- More products... -->
+                       
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    
+  <!-- This example requires Tailwind CSS v2.0+ -->
+
+
+    <div  class=" modal-pirint hidden " ><div class=" target-hidden fixed z-10 inset-0 overflow-y-auto " aria-labelledby=" modal-title " role=" dialog " aria-modal=" true ">
+        <div class=" flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 ">
+          <!--
+          -->
+          <div class=" fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity " aria-hidden=" true "></div>
+    
+          <!-- This element is to trick the browser into centering the modal contents. -->
+          <span class=" hidden sm:inline-block sm:align-middle sm:h-screen " aria-hidden=" true ">&#8203;</span>
+
+          <div class=" relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full ">
+            <div class=" bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 ">
+              <div class="cart-viwe ">
+             
+               </div>
+                    </div>
+                    <div class=" bg-gray-50 px-4 py-2 sm:px-6 sm:flex ">
+                        <div><span class=" font-semibold total-price "></span></div>
+                        <div> <button type=" button " class=" w-10/12 ml-4 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-fuchsia-600 text-base font-medium text-white hover:bg-fuchsia-700 focus:outline-none focus:ring-2focus:ring-offset-2
+                                focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm ">Deactivate</button>
+                            <button type=" button " class=" modal-cancel mt-3 w-10/12 ml-4 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-nonefocus:ring-2
+                                focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm ">Cancel</button></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+</body>
+<script src=" ./main.js "></script>
+
+</html>
