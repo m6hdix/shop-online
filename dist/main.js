@@ -149,14 +149,14 @@ class UiPirinter {
 
 
     }
-
-
     addToCart() {
         const btnShop = document.querySelectorAll(".btn-shop");
         const btns = [...btnShop];
         btns.forEach((btn) => {
             const id = btn.dataset.id;
-            const isInCart = cartChek.find((p) => p.idProduct === id);
+            const carts = new Storages
+            const cheker = carts.cartchker() || []
+            const isInCart = cheker.find((p) => p.idProduct === parseInt(id))
             if (isInCart) {
                 btn.innerText = "in card";
                 btn.disabled = true;
@@ -172,7 +172,6 @@ class UiPirinter {
                 this.setCartValue(cartChek);
                 this.addCartItems(addedProduct);
 
-
             })
         })
     }
@@ -186,7 +185,14 @@ class UiPirinter {
         }, 0)
         totalPrice.innerHTML = `Total Price : ${cartTotal} $ `
         counterCart.innerHTML = tempCartItems
-
+        const btnRemover = document.querySelector(".btn-remover")
+        btnRemover.addEventListener("click", () => {
+            tempCartItems = 0
+            totalPrice.innerHTML = `Total Price : 0 $ `
+            counterCart.innerHTML = tempCartItems
+            localStorage.removeItem("cart")
+            this.cartremover();
+        })
     }
     addCartItems(cartitems) {
         const div = document.createElement("div")
@@ -197,19 +203,39 @@ class UiPirinter {
     <h3 class=" mt-4 text-sm text-gray-700 ">${cartitems.title}</h3>
     
     <div class="cart-counter flex flex-row-reverse  ">
-    <div><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+    <div data-id=${cartitems.idProduct}  ><svg xmlns="http://www.w3.org/2000/svg" data-id=${cartitems.idProduct} class="h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
   </svg></div>
   <div >
   <p class=" mt-1 text-lg font-medium text-gray-900 ">$${cartitems.price}</p>
-  <button class="btn-counter incerment ">+</button>
-  <span class="counter ">0</span>
-  <button class="btn-counter decrement ">-</button>
+  <button class="btn-counter incerment cursor-pointer "  data-id=${cartitems.idProduct}>+</button>
+  <span class="counter ">${cartitems.quantity}</span>
+  <button class="btn-counter decrement cursor-pointer "  data-id=${cartitems.idProduct} >-</button>
   </div>
                 </div>
           `
         cartViweTarget.appendChild(div)
 
+    }
+    setupApp() {
+        const storegsProduct = new Storages;
+        const items = storegsProduct.getStupApp() || [];
+        cartChek = items
+        cartChek.forEach((cartitems) => this.addCartItems(cartitems))
+        this.setCartValue(cartChek)
+    }
+    cartremover() {
+        while (cartViweTarget.children.length) {
+            cartViweTarget.removeChild(cartViweTarget.children[0])
+        }
+        modalElement.classList.add("hidden")
+        const btnShop = document.querySelectorAll(".btn-shop");
+        const btns = [...btnShop];
+        btns.forEach((btn) => {
+            btn.innerText = "add to Shopping cart";
+            btn.disabled = false;
+        })
+        tempCartItems = 0
     }
 }
 class Storages {
@@ -223,6 +249,12 @@ class Storages {
     saveCart(cart) {
         localStorage.setItem("cart", JSON.stringify(cart))
     }
+    getStupApp() {
+        return JSON.parse(localStorage.getItem("cart"))
+    }
+    cartchker() {
+        return JSON.parse(localStorage.getItem("cart"))
+    }
 
 }
 
@@ -234,6 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const storage = new Storages
     storage.saveProducts(productsDate)
     UI.addToCart()
+    UI.setupApp()
+
 
 
 })
