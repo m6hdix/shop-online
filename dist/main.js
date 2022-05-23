@@ -58,22 +58,6 @@ btnMdalCancel.addEventListener("click", (e) => {
 })
 
 
-const btns = document.querySelectorAll(".btn-counter");
-const counters = document.querySelector(".counter")
-
-let count = 0
-
-btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const clases = btn.classList;
-        if (clases.contains("incerment")) count++;
-        else if (clases.contains("decrement")) count--;
-        else count = 0;
-        counters.textContent = count;
-    })
-})
-
-
 /// clases 
 const productsList = [{
     idProduct: 1,
@@ -118,7 +102,20 @@ const productsList = [{
 }, ];
 
 
+const btns = document.querySelectorAll(".btn-counter");
+const counters = document.querySelector(".counter")
 
+
+
+btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        const clases = btn.classList;
+        if (clases.contains("incerment")) count++;
+        else if (clases.contains("decrement")) count--;
+        else count = 0;
+        counters.textContent = count;
+    })
+})
 
 //1.get products
 class Products {
@@ -190,31 +187,32 @@ class UiPirinter {
             tempCartItems = 0
             totalPrice.innerHTML = `Total Price : 0 $ `
             counterCart.innerHTML = tempCartItems
-            localStorage.removeItem("cart")
+
             this.cartremover();
         })
     }
     addCartItems(cartitems) {
         const div = document.createElement("div")
-        div.classList = "flex justify-between "
+        div.classList = "flex justify-between cart-content"
         div.innerHTML = `  <div class=" w-12 h-12 aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden flex justify-between ">
         <img src=${cartitems.imageUrl} class=" w-12 h-12 object-center object-cover group-hover:opacity-75 ">
     </div>
     <h3 class=" mt-4 text-sm text-gray-700 ">${cartitems.title}</h3>
     
-    <div class="cart-counter flex flex-row-reverse  ">
-    <div data-id=${cartitems.idProduct}  ><svg xmlns="http://www.w3.org/2000/svg" data-id=${cartitems.idProduct} class="h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+    <div class=" flex flex-row-reverse  ">
+    <div data-id=${cartitems.idProduct}  ><svg xmlns="http://www.w3.org/2000/svg"  class=" trash h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+    <path data-id=${cartitems.idProduct}  fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
   </svg></div>
-  <div >
+  <div class="cart-counter" >
   <p class=" mt-1 text-lg font-medium text-gray-900 ">$${cartitems.price}</p>
   <button class="btn-counter incerment cursor-pointer "  data-id=${cartitems.idProduct}>+</button>
-  <span class="counter ">${cartitems.quantity}</span>
+  <span class="counter " >${cartitems.quantity}</span>
   <button class="btn-counter decrement cursor-pointer "  data-id=${cartitems.idProduct} >-</button>
   </div>
                 </div>
           `
         cartViweTarget.appendChild(div)
+
 
     }
     setupApp() {
@@ -235,8 +233,36 @@ class UiPirinter {
             btn.innerText = "add to Shopping cart";
             btn.disabled = false;
         })
-        tempCartItems = 0
+        const storage = new Storages
+        this.setCartValue(cartChek, 0);
+        storage.saveCart(cartChek);
+        localStorage.removeItem("cart")
+        location.reload();
     }
+    cartItemRemover() {
+        const btnRemover = document.querySelector(".cart-viwe")
+        btnRemover.addEventListener("click", (el) => {
+            const counter = [...document.querySelectorAll(".counter")]
+            if (el.target.classList.contains("incerment")) {
+                const addQuantity = el.target
+                const targets = cartChek.find((e) => e.idProduct == addQuantity.dataset.id)
+                targets.quantity++
+                    addQuantity.nextElementSibling.innerText = targets.quantity
+                this.setCartValue(cartChek)
+                const storage = new Storages
+                storage.saveCart(cartChek)
+            } else if (el.target.classList.contains("decrement")) {
+                const addQuantity = el.target
+                const targets = cartChek.find((e) => e.idProduct == addQuantity.dataset.id)
+                targets.quantity--
+                    addQuantity.previousElementSibling.innerText = targets.quantity
+                this.setCartValue(cartChek)
+                const storage = new Storages
+                storage.saveCart(cartChek)
+            }
+        })
+    }
+
 }
 class Storages {
     saveProducts(products) {
@@ -267,6 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     storage.saveProducts(productsDate)
     UI.addToCart()
     UI.setupApp()
+    UI.cartItemRemover()
 
 
 
