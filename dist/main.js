@@ -200,8 +200,8 @@ class UiPirinter {
     <h3 class=" mt-4 text-sm text-gray-700 ">${cartitems.title}</h3>
     
     <div class=" flex flex-row-reverse  ">
-    <div data-id=${cartitems.idProduct}  ><svg xmlns="http://www.w3.org/2000/svg"  class=" trash h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-    <path data-id=${cartitems.idProduct}  fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+    <div data-id=${cartitems.idProduct} class="trash" ><svg xmlns="http://www.w3.org/2000/svg" data-id=${cartitems.idProduct}  class=" trash h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+    <path data-id=${cartitems.idProduct}  class="trash"  fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
   </svg></div>
   <div class="cart-counter" >
   <p class=" mt-1 text-lg font-medium text-gray-900 ">$${cartitems.price}</p>
@@ -242,7 +242,6 @@ class UiPirinter {
     cartItemRemover() {
         const btnRemover = document.querySelector(".cart-viwe")
         btnRemover.addEventListener("click", (el) => {
-            const counter = [...document.querySelectorAll(".counter")]
             if (el.target.classList.contains("incerment")) {
                 const addQuantity = el.target
                 const targets = cartChek.find((e) => e.idProduct == addQuantity.dataset.id)
@@ -259,8 +258,32 @@ class UiPirinter {
                 this.setCartValue(cartChek)
                 const storage = new Storages
                 storage.saveCart(cartChek)
+                console.log(el.target.dataset)
             }
+            if (el.target.classList.contains("trash")) {
+                const targets = el.target
+                const targetItem = cartChek.find((e) => e.idProduct == targets.dataset.id)
+                btnRemover.removeChild(targets.parentElement.parentElement.parentElement)
+                this.remover(targetItem);
+                const storage = new Storages
+                storage.saveCart(cartChek)
+            }
+
         })
+    }
+    remover(cartID) {
+        const btnShop = document.querySelectorAll(".btn-shop");
+        const btns = [...btnShop];
+        const btnTargets = btns.find((e) => e.dataset.id == cartID.idProduct)
+        btnTargets.innerText = "add to Shopping cart";
+        btnTargets.disabled = false;
+        const trget = cartChek.find((e) => e == cartID)
+        cartChek.splice(cartChek.indexOf(trget), 1)
+        const storage = new Storages
+        storage.saveCart(cartChek)
+        this.setCartValue(cartChek)
+
+
     }
 
 }
@@ -280,6 +303,7 @@ class Storages {
     }
     cartchker() {
         return JSON.parse(localStorage.getItem("cart"))
+
     }
 
 }
