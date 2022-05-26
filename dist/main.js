@@ -258,7 +258,14 @@ class UiPirinter {
                 this.setCartValue(cartChek)
                 const storage = new Storages
                 storage.saveCart(cartChek)
-                console.log(el.target.dataset)
+                if (targets.quantity == 0) {
+                    const targets = el.target
+                    const targetItem = cartChek.find((e) => e.idProduct == targets.dataset.id)
+                    btnRemover.removeChild(targets.parentElement.parentElement.parentElement)
+                    this.remover(targetItem);
+                    const storage = new Storages
+                    storage.saveCart(cartChek)
+                }
             }
             if (el.target.classList.contains("trash")) {
                 const targets = el.target
