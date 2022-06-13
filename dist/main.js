@@ -11,54 +11,7 @@ const totalPrice = document.querySelector(".total-price")
 const cartViweTarget = document.querySelector(".cart-viwe")
 
 let cartChek = []
-
-
-
-toggle.addEventListener("click", () => {
-    if (!popUp.classList.contains("sm:block")) {
-        popUp.classList = "sm:block";
-    } else if (popUp.classList.contains("sm:block")) {
-        popUp.classList = "hidden";
-    }
-    if (dow.addEventListener("click", () => { popUp.classList = "hidden"; })) {
-
-    }
-
-})
-
-
-
-imgProfile.addEventListener("click", () => {
-    if (profilePopUp.classList.contains("hidden")) {
-        profilePopUp.classList = "block";
-    } else if (!profilePopUp.classList.contains("hidden")) {
-        profilePopUp.classList = "hidden";
-    }
-    if (dow.addEventListener("click", () => { profilePopUp.classList = "hidden";; })) {
-
-    }
-})
-
-
-// set the modal menu element
-const btnMdalCancel = document.querySelector(".modal-cancel")
-const targetHidden = document.querySelector(".target-hidden")
-const showModal = document.querySelector(".show-modal")
-const modalElement = document.querySelector(".modal-pirint")
-showModal.addEventListener("click", () => {
-    if (modalElement.classList.contains("hidden")) {
-        modalElement.classList.remove("hidden")
-        modalElement.classList.add("block")
-    }
-
-})
-
-btnMdalCancel.addEventListener("click", (e) => {
-    modalElement.classList.add("hidden")
-})
-
-
-/// clases 
+    /// clases 
 const productsList = [{
     idProduct: 1,
     title: "Earthen Bottle",
@@ -101,32 +54,13 @@ const productsList = [{
     imageUrl: "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-08.jpg",
 }, ];
 
-
-const btns = document.querySelectorAll(".btn-counter");
-const counters = document.querySelector(".counter")
-
-
-
-btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const clases = btn.classList;
-        if (clases.contains("incerment")) count++;
-        else if (clases.contains("decrement")) count--;
-        else count = 0;
-        counters.textContent = count;
-    })
-})
-
 //1.get products
 class Products {
     listProducts() {
         return productsList;
     }
 };
-
-
 //2.pirinter products
-
 class UiPirinter {
     productsItem(products) {
         let resulte = ""
@@ -143,8 +77,6 @@ class UiPirinter {
       </a>`
             productsPrinters.innerHTML = resulte
         })
-
-
     }
     addToCart() {
         const btnShop = document.querySelectorAll(".btn-shop");
@@ -168,46 +100,45 @@ class UiPirinter {
                 storegsProduct.saveCart(cartChek);
                 this.setCartValue(cartChek);
                 this.addCartItems(addedProduct);
-
             })
         })
     }
     setCartValue(cart) {
         //1.total price :
-        let tempCartItems = 0;
+        let tempcartItems = 0;
         const cartTotal = cart.reduce((acc, curr) => {
-            tempCartItems += curr.quantity
+            tempcartItems += curr.quantity
             return acc + curr.quantity * curr.price
 
         }, 0)
         totalPrice.innerHTML = `Total Price : ${cartTotal} $ `
-        counterCart.innerHTML = tempCartItems
+        counterCart.innerHTML = tempcartItems
         const btnRemover = document.querySelector(".btn-remover")
         btnRemover.addEventListener("click", () => {
-            tempCartItems = 0
+            tempcartItems = 0
             totalPrice.innerHTML = `Total Price : 0 $ `
-            counterCart.innerHTML = tempCartItems
+            counterCart.innerHTML = tempcartItems
 
-            this.cartremover();
+            this.cartRemover();
         })
     }
-    addCartItems(cartitems) {
+    addCartItems(cartItems) {
         const div = document.createElement("div")
         div.classList = "flex justify-between cart-content"
         div.innerHTML = `  <div class=" w-12 h-12 aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden flex justify-between ">
-        <img src=${cartitems.imageUrl} class=" w-12 h-12 object-center object-cover group-hover:opacity-75 ">
+        <img src=${cartItems.imageUrl} class=" w-12 h-12 object-center object-cover group-hover:opacity-75 ">
     </div>
-    <h3 class=" mt-4 text-sm text-gray-700 ">${cartitems.title}</h3>
+    <h3 class=" mt-4 text-sm text-gray-700 ">${cartItems.title}</h3>
     
     <div class=" flex flex-row-reverse  ">
-    <div data-id=${cartitems.idProduct} class="trash" ><svg xmlns="http://www.w3.org/2000/svg" data-id=${cartitems.idProduct}  class=" trash h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-    <path data-id=${cartitems.idProduct}  class="trash"  fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+    <div data-id=${cartItems.idProduct} class="trash" ><svg xmlns="http://www.w3.org/2000/svg" data-id=${cartItems.idProduct}  class=" trash h-5 w-5 text-red-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+    <path data-id=${cartItems.idProduct}  class="trash"  fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
   </svg></div>
   <div class="cart-counter" >
-  <p class=" mt-1 text-lg font-medium text-gray-900 ">$${cartitems.price}</p>
-  <button class="btn-counter incerment cursor-pointer "  data-id=${cartitems.idProduct}>+</button>
-  <span class="counter " >${cartitems.quantity}</span>
-  <button class="btn-counter decrement cursor-pointer "  data-id=${cartitems.idProduct} >-</button>
+  <p class=" mt-1 text-lg font-medium text-gray-900 ">$${cartItems.price}</p>
+  <button class="btn-counter incerment cursor-pointer "  data-id=${cartItems.idProduct}>+</button>
+  <span class="counter " >${cartItems.quantity}</span>
+  <button class="btn-counter decrement cursor-pointer "  data-id=${cartItems.idProduct} >-</button>
   </div>
                 </div>
           `
@@ -219,10 +150,55 @@ class UiPirinter {
         const storegsProduct = new Storages;
         const items = storegsProduct.getStupApp() || [];
         cartChek = items
-        cartChek.forEach((cartitems) => this.addCartItems(cartitems))
+        cartChek.forEach((cartItems) => this.addCartItems(cartItems))
         this.setCartValue(cartChek)
+        toggle.addEventListener("click", () => {
+            if (!popUp.classList.contains("sm:block")) {
+                popUp.classList = "sm:block";
+            } else if (popUp.classList.contains("sm:block")) {
+                popUp.classList = "hidden";
+            }
+            if (dow.addEventListener("click", () => { popUp.classList = "hidden"; })) {
+
+            }
+
+        })
+        imgProfile.addEventListener("click", () => {
+            if (profilePopUp.classList.contains("hidden")) {
+                profilePopUp.classList = "block";
+            } else if (!profilePopUp.classList.contains("hidden")) {
+                profilePopUp.classList = "hidden";
+            }
+            if (dow.addEventListener("click", () => { profilePopUp.classList = "hidden";; })) {
+
+            }
+        })
+        const btns = document.querySelectorAll(".btn-counter");
+        const counters = document.querySelector(".counter")
+        btns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const clases = btn.classList;
+                if (clases.contains("incerment")) count++;
+                else if (clases.contains("decrement")) count--;
+                else count = 0;
+                counters.textContent = count;
+            })
+        })
+        const btnMdalCancel = document.querySelector(".modal-cancel")
+        const showModal = document.querySelector(".show-modal")
+        const modalElement = document.querySelector(".modal-pirint")
+        showModal.addEventListener("click", () => {
+            if (modalElement.classList.contains("hidden")) {
+                modalElement.classList.remove("hidden")
+                modalElement.classList.add("block")
+            }
+
+        })
+        btnMdalCancel.addEventListener("click", (e) => {
+            modalElement.classList.add("hidden")
+        })
     }
-    cartremover() {
+    cartRemover() {
         while (cartViweTarget.children.length) {
             cartViweTarget.removeChild(cartViweTarget.children[0])
         }
